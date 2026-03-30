@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureLife Insurance – Protect What Matters Most</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --navy-mid: #112D52;
+    --blue: #1B4F8A;
+    --blue-light: #2463AE;
+    --gold: #C9953A;
+    --gold-light: #E8B860;
+    --cream: #F8F5EF;
+    --white: #FFFFFF;
+    --text-dark: #0D1B2A;
+    --text-mid: #3A4A5C;
+    --text-light: #7A8A9C;
+    --border: rgba(11,31,58,0.08);
+    --shadow-sm: 0 2px 12px rgba(11,31,58,0.07);
+    --shadow-md: 0 8px 32px rgba(11,31,58,0.12);
+    --shadow-lg: 0 20px 60px rgba(11,31,58,0.18);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; }
+  h2 { font-size: clamp(1.7rem, 3.5vw, 2.8rem); font-weight: 600; }
+  h3 { font-size: 1.3rem; font-weight: 600; }
+  p { color: var(--text-mid); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes counterUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 5%;
+    background: rgba(11,31,58,0.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s ease;
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+  .logo-text span { color: var(--gold-light); }
+
+  nav { display: flex; align-items: center; gap: 32px; }
+  nav a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--gold-light); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy) !important;
+    padding: 10px 22px; border-radius: 50px;
+    font-weight: 600 !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,149,58,0.4) !important; }
+
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { width: 24px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #071324 0%, #0B2044 40%, #0F2D5A 70%, #0A1E3A 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 5% 80px;
+  }
+  .hero-bg-orb {
+    position: absolute; border-radius: 50%;
+    pointer-events: none;
+  }
+  .orb1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(36,99,174,0.25) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: floatY 8s ease-in-out infinite;
+  }
+  .orb2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,149,58,0.12) 0%, transparent 70%);
+    bottom: 50px; left: -50px;
+    animation: floatY 10s ease-in-out infinite 2s;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center; width: 100%;
+    position: relative; z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,149,58,0.12);
+    border: 1px solid rgba(201,149,58,0.3);
+    color: var(--gold-light); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 50px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; background: var(--gold-light); border-radius: 50%; }
+
+  .hero-title {
+    color: var(--white);
+    animation: fadeUp 0.8s ease 0.15s both;
+  }
+  .hero-title em { font-style: normal; color: var(--gold-light); }
+
+  .hero-sub {
+    font-size: 1.1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    margin: 20px 0 36px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-buttons {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.45s both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy); font-weight: 700; font-size: 0.95rem;
+    padding: 14px 28px; border-radius: 50px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(201,149,58,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(201,149,58,0.5); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white); font-weight: 600; font-size: 0.95rem;
+    padding: 14px 28px; border-radius: 50px;
+    text-decoration: none; border: 1.5px solid rgba(255,255,255,0.25); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+  .hero-trust-row {
+    display: flex; align-items: center; gap: 24px;
+    margin-top: 40px;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .trust-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.15); }
+  .trust-item { text-align: center; }
+  .trust-item .num { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold-light); font-weight: 700; }
+  .trust-item .lbl { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-card-stack { position: relative; height: 400px; }
+  .shield-card {
+    position: absolute;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 28px;
+  }
+  .shield-main {
+    width: 320px; height: 340px; top: 0; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(145deg, rgba(27,79,138,0.5), rgba(11,31,58,0.8));
+    border: 1px solid rgba(201,149,58,0.2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    animation: floatY 6s ease-in-out infinite;
+  }
+  .shield-icon-wrap {
+    width: 90px; height: 90px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 40px; margin-bottom: 20px;
+    box-shadow: 0 0 40px rgba(201,149,58,0.4);
+  }
+  .shield-main h3 { color: white; font-size: 1.4rem; margin-bottom: 8px; }
+  .shield-main p { color: rgba(255,255,255,0.55); font-size: 0.85rem; }
+
+  .floating-pill {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50px;
+    padding: 10px 18px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: var(--shadow-md);
+    font-size: 0.8rem; font-weight: 600; color: var(--navy);
+    white-space: nowrap;
+  }
+  .pill-1 { top: 30px; right: -20px; animation: floatY 4s ease-in-out infinite 1s; }
+  .pill-2 { bottom: 60px; left: -30px; animation: floatY 5s ease-in-out infinite 0.5s; }
+  .pill-3 { bottom: 10px; right: 0; animation: floatY 4.5s ease-in-out infinite 1.5s; }
+  .pill-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .pill-green { background: #e8f8ee; }
+  .pill-blue  { background: #e8f0fb; }
+  .pill-gold  { background: #fef5e4; }
+
+  /* ─── SECTIONS SHARED ─── */
+  section { padding: 96px 5%; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(27,79,138,0.07);
+    color: var(--blue);
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 50px;
+    border: 1px solid rgba(27,79,138,0.15);
+    margin-bottom: 16px;
+  }
+  .section-header { max-width: 600px; margin-bottom: 56px; }
+  .section-header.centered { text-align: center; margin: 0 auto 56px; }
+  .section-header p { margin-top: 14px; font-size: 1.05rem; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--cream); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 58px; height: 58px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 20px;
+  }
+  .icon-blue   { background: rgba(27,79,138,0.08); }
+  .icon-green  { background: rgba(34,139,87,0.08); }
+  .icon-orange { background: rgba(234,107,35,0.1); }
+  .icon-purple { background: rgba(112,57,168,0.08); }
+  .icon-teal   { background: rgba(20,145,145,0.08); }
+  .icon-red    { background: rgba(198,42,42,0.08); }
+
+  .service-card h3 { margin-bottom: 10px; color: var(--text-dark); }
+  .service-card p  { font-size: 0.88rem; line-height: 1.65; }
+  .service-learn {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--blue); font-size: 0.82rem; font-weight: 600;
+    margin-top: 18px; text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .service-learn:hover { gap: 10px; }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 100%);
+    position: relative; overflow: hidden;
+  }
+  #why .section-tag { background: rgba(201,149,58,0.15); color: var(--gold-light); border-color: rgba(201,149,58,0.25); }
+  #why h2 { color: white; }
+  #why .section-header p { color: rgba(255,255,255,0.6); }
+
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: center;
+  }
+  .why-features { display: flex; flex-direction: column; gap: 20px; }
+  .why-feature {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+  }
+  .why-feature:hover { background: rgba(255,255,255,0.07); }
+  .why-feat-icon {
+    width: 46px; height: 46px; flex-shrink: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(201,149,58,0.2), rgba(232,184,96,0.15));
+    border: 1px solid rgba(201,149,58,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .why-feature h4 { color: white; font-size: 1rem; margin-bottom: 4px; }
+  .why-feature p  { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .stat-box .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700;
+    color: var(--gold-light);
+    display: block; line-height: 1;
+  }
+  .stat-box .lbl { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 6px; }
+  .irda-badge {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(201,149,58,0.12), rgba(201,149,58,0.06));
+    border: 1px solid rgba(201,149,58,0.25);
+    border-radius: var(--radius); padding: 20px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .irda-badge .badge-icon { font-size: 32px; }
+  .irda-badge .badge-text { font-size: 0.85rem; color: var(--gold-light); font-weight: 600; }
+  .irda-badge .badge-sub  { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+  /* ─── QUOTE FORM ─── */
+  #quote { background: var(--cream); }
+  .quote-wrap {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    gap: 60px; align-items: center;
+  }
+  .quote-form-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+  }
+  .form-title { font-size: 1.5rem; margin-bottom: 6px; color: var(--navy); }
+  .form-sub   { font-size: 0.88rem; color: var(--text-light); margin-bottom: 28px; }
+
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 0.82rem; font-weight: 600;
+    color: var(--text-mid); margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid rgba(11,31,58,0.12);
+    border-radius: 10px;
+    font-size: 0.9rem; font-family: inherit;
+    color: var(--text-dark);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--blue-light);
+    box-shadow: 0 0 0 3px rgba(36,99,174,0.1);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .btn-submit {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white; font-size: 1rem; font-weight: 700;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 8px;
+    box-shadow: 0 4px 20px rgba(11,31,58,0.25);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(11,31,58,0.35); }
+
+  .form-note { font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 14px; }
+
+  .quote-info h2 { margin-bottom: 16px; }
+  .quote-benefits { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+  .qb-item { display: flex; align-items: center; gap: 14px; }
+  .qb-check {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(27,79,138,0.08);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--blue); font-size: 15px;
+  }
+  .qb-item p { font-size: 0.9rem; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: white; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .testi-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .stars { color: #F4B942; font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 14px; }
+  .testi-text { font-size: 0.92rem; line-height: 1.7; font-style: italic; color: var(--text-mid); margin-bottom: 20px; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: white;
+  }
+  .av-blue   { background: linear-gradient(135deg, #1B4F8A, #2463AE); }
+  .av-green  { background: linear-gradient(135deg, #1A7A4A, #2EA668); }
+  .av-orange { background: linear-gradient(135deg, #B84E16, #EA6B23); }
+  .av-purple { background: linear-gradient(135deg, #6B2FA0, #9351D4); }
+  .av-teal   { background: linear-gradient(135deg, #0E7C7C, #1AABAB); }
+  .av-navy   { background: linear-gradient(135deg, #0B1F3A, #1B4F8A); }
+  .author-name { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+  .author-role { font-size: 0.78rem; color: var(--text-light); }
+
+  /* ─── PARTNERS ─── */
+  #partners { background: var(--cream); padding: 64px 5%; }
+  .partners-label { text-align: center; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 36px; }
+  .partners-track-wrap { overflow: hidden; position: relative; }
+  .partners-track-wrap::before,
+  .partners-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
+  }
+  .partners-track-wrap::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+  .partners-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+  @keyframes scrollPartners {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .partners-track {
+    display: flex; gap: 32px; align-items: center;
+    animation: scrollPartners 22s linear infinite;
+    width: max-content;
+  }
+  .partner-logo {
+    background: white; border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 28px;
+    font-weight: 700; font-size: 0.9rem; color: var(--text-mid);
+    white-space: nowrap; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .partner-logo:hover { border-color: var(--blue-light); color: var(--blue); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: white;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .about-visual {
+    position: relative; height: 400px;
+  }
+  .about-bg-card {
+    position: absolute;
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    border-radius: 24px;
+    width: 85%; height: 85%;
+    top: 0; left: 0;
+  }
+  .about-img-card {
+    position: absolute;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    bottom: 0; right: 0;
+    width: 75%; height: 75%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md);
+  }
+  .about-emoji { font-size: 80px; text-align: center; }
+  .about-milestone {
+    position: absolute; top: 16px; right: 0;
+    background: white; border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px 18px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+  .about-milestone .m-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); font-weight: 700; }
+  .about-milestone .m-lbl { font-size: 0.72rem; color: var(--text-light); }
+  .about-content p { margin-top: 16px; line-height: 1.8; }
+  .mission-box {
+    margin-top: 28px;
+    background: var(--cream);
+    border-left: 4px solid var(--gold);
+    padding: 18px 22px;
+    border-radius: 0 12px 12px 0;
+  }
+  .mission-box p { font-style: italic; color: var(--text-mid); }
+
+  /* ─── FAQ ─── */
+  #faq { background: var(--cream); }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  .faq-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 24px; cursor: pointer;
+    font-weight: 600; font-size: 0.95rem; color: var(--text-dark);
+    transition: background 0.2s;
+  }
+  .faq-q:hover { background: var(--cream); }
+  .faq-icon { font-size: 1.1rem; transition: transform 0.3s; color: var(--blue); }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding: 0 24px;
+    font-size: 0.9rem; line-height: 1.7; color: var(--text-mid);
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: linear-gradient(160deg, var(--navy), var(--navy-mid));
+  }
+  #contact .section-tag { background: rgba(201,149,58,0.15); color: var(--gold-light); border-color: rgba(201,149,58,0.25); }
+  #contact h2 { color: white; }
+  #contact .section-header p { color: rgba(255,255,255,0.6); }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+  }
+  .contact-cards { display: flex; flex-direction: column; gap: 16px; }
+  .contact-card {
+    display: flex; align-items: center; gap: 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm); padding: 20px 24px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .contact-card:hover { background: rgba(255,255,255,0.09); }
+  .cc-icon {
+    width: 46px; height: 46px; flex-shrink: 0;
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .cc-green  { background: rgba(37,211,102,0.15); }
+  .cc-blue   { background: rgba(36,99,174,0.2); }
+  .cc-gold   { background: rgba(201,149,58,0.15); }
+  .contact-card h4 { color: white; font-size: 0.9rem; margin-bottom: 2px; }
+  .contact-card p  { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+
+  .map-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    overflow: hidden; height: 100%; min-height: 280px;
+    display: flex; flex-direction: column;
+  }
+  .map-placeholder {
+    flex: 1; background: rgba(27,79,138,0.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px; padding: 32px;
+  }
+  .map-placeholder .map-emoji { font-size: 48px; }
+  .map-placeholder p { color: rgba(255,255,255,0.5); font-size: 0.85rem; text-align: center; }
+  .map-address {
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.2);
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+  }
+
+  /* ─── CTA BAND ─── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    padding: 48px 5%; text-align: center;
+  }
+  .cta-band h2 { color: var(--navy); font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 8px; }
+  .cta-band p  { color: rgba(11,31,58,0.7); margin-bottom: 24px; }
+  .cta-band-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn-dark {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--navy); color: white; font-weight: 700;
+    padding: 13px 28px; border-radius: 50px; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11,31,58,0.35); }
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--navy); font-weight: 700;
+    padding: 13px 28px; border-radius: 50px; text-decoration: none;
+    border: none; cursor: pointer; font-family: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060F1E;
+    padding: 56px 5% 28px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-brand .logo-text { font-size: 1.2rem; }
+  .footer-brand p { font-size: 0.84rem; margin-top: 14px; line-height: 1.7; color: rgba(255,255,255,0.4); }
+  .footer-col h5 { color: white; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 18px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem; gap: 16px; flex-wrap: wrap;
+  }
+  .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-bottom a:hover { color: white; }
+
+  /* ─── WHATSAPP ─── */
+  .whatsapp-btn {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    width: 58px; height: 58px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 26px;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+    transition: transform 0.2s;
+  }
+  .whatsapp-btn:hover { transform: scale(1.1); }
+  .whatsapp-btn::before {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 50%; border: 2px solid #25D366;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  /* ─── MOBILE NAV ─── */
+  .mobile-nav {
+    display: none;
+    position: fixed; top: 70px; left: 0; right: 0; z-index: 999;
+    background: rgba(11,31,58,0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column; gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    padding: 16px 5%; color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+  }
+  .mobile-nav a:hover { background: rgba(255,255,255,0.05); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-visual { display: none; }
+    .quote-wrap { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 4%; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-trust-row { gap: 14px; }
+    .trust-item .num { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🛡️</div>
+      <span class="logo-text">Secure<span>Life</span></span>
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#why">Why Us</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#contact">Contact</a>
+      <a href="#quote" class="nav-cta">Get Free Quote</a>
+    </nav>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="#quote" onclick="toggleMenu()">Get Free Quote</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-orb orb1"></div>
+  <div class="hero-bg-orb orb2"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> IRDA Approved · Trusted by 50,000+ Families</div>
+      <h1 class="hero-title">Secure Your Future with <em>Trusted</em> Insurance Solutions</h1>
+      <p class="hero-sub">Comprehensive insurance plans tailored to protect your family, health, vehicle, and business — with expert advisors by your side, every step of the way.</p>
+      <div class="hero-buttons">
+        <a href="#quote" class="btn-primary">Get Free Quote ✦</a>
+        <a href="#contact" class="btn-outline">📞 Talk to Expert</a>
+      </div>
+      <div class="hero-trust-row">
+        <div class="trust-item"><div class="num">50K+</div><div class="lbl">Happy Clients</div></div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><div class="num">₹200Cr+</div><div class="lbl">Claims Settled</div></div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><div class="num">15+</div><div class="lbl">Years Experience</div></div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><div class="num">98%</div><div class="lbl">Claim Ratio</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="shield-card shield-main">
+          <div class="shield-icon-wrap">🛡️</div>
+          <h3>Complete Protection</h3>
+          <p>Life · Health · Motor · Business</p>
+        </div>
+        <div class="floating-pill pill-1">
+          <div class="pill-icon pill-green">✅</div>
+          Claim Approved in 24hrs
+        </div>
+        <div class="floating-pill pill-2">
+          <div class="pill-icon pill-blue">⚡</div>
+          Instant Policy Issuance
+        </div>
+        <div class="floating-pill pill-3">
+          <div class="pill-icon pill-gold">🏆</div>
+          IRDA Certified Advisors
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">What We Offer</div>
+      <h2>Insurance Plans for Every Stage of Life</h2>
+      <p>From protecting your loved ones to safeguarding your assets — we have a plan for every need and every budget.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon icon-blue">❤️</div>
+        <h3>Life Insurance</h3>
+        <p>Protect your family's financial future with term, endowment, and ULIP plans from India's top insurers. Starting from just ₹499/month.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon icon-green">🏥</div>
+        <h3>Health Insurance</h3>
+        <p>Comprehensive health coverage for individuals and families. Cashless hospitalization at 10,000+ network hospitals across India.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon icon-orange">🚗</div>
+        <h3>Motor Insurance</h3>
+        <p>Complete protection for your car or two-wheeler. Third-party liability, own damage, and zero-depreciation add-ons available.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon icon-purple">🏢</div>
+        <h3>Business Insurance</h3>
+        <p>Safeguard your enterprise with fire, burglary, workmen compensation, and commercial liability insurance solutions.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon icon-teal">✈️</div>
+        <h3>Travel Insurance</h3>
+        <p>Worry-free travel with coverage for medical emergencies, trip cancellations, baggage loss, and flight delays worldwide.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon icon-red">🏠</div>
+        <h3>Home Insurance</h3>
+        <p>Protect your home and belongings from natural disasters, fire, theft, and accidental damage with affordable home plans.</p>
+        <a href="#quote" class="service-learn">Explore Plans →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND 1 -->
+<div class="cta-band">
+  <div class="container">
+    <h2>Not sure which plan is right for you?</h2>
+    <p>Our certified advisors will help you choose the perfect coverage — absolutely free.</p>
+    <div class="cta-band-btns">
+      <a href="#quote" class="btn-dark">Get Free Quote ✦</a>
+      <a href="#contact" class="btn-white">📞 Call Us Now</a>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <div class="section-header reveal">
+          <div class="section-tag">Why SecureLife</div>
+          <h2>India's Most Trusted Insurance Partner</h2>
+          <p>We're not just selling policies — we're building lifelong relationships built on trust, transparency, and fast service.</p>
+        </div>
+        <div class="why-features">
+          <div class="why-feature reveal">
+            <div class="why-feat-icon">⚡</div>
+            <div>
+              <h4>Fast Claim Settlement</h4>
+              <p>98% of claims settled within 24–72 hours. Our dedicated claim support team ensures a hassle-free experience.</p>
+            </div>
+          </div>
+          <div class="why-feature reveal">
+            <div class="why-feat-icon">👨‍💼</div>
+            <div>
+              <h4>Certified Expert Advisors</h4>
+              <p>IRDA-licensed advisors with 10+ years of experience help you navigate complex policies with ease.</p>
+            </div>
+          </div>
+          <div class="why-feature reveal">
+            <div class="why-feat-icon">🔒</div>
+            <div>
+              <h4>100% Transparent Process</h4>
+              <p>No hidden charges, no surprise exclusions. We explain everything in plain language before you commit.</p>
+            </div>
+          </div>
+          <div class="why-feature reveal">
+            <div class="why-feat-icon">📱</div>
+            <div>
+              <h4>24/7 Customer Support</h4>
+              <p>Reach us anytime via phone, WhatsApp, or email. We're always here when you need us most.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="num" data-target="50000">50K+</span>
+            <div class="lbl">Happy Clients</div>
+          </div>
+          <div class="stat-box">
+            <span class="num">₹200Cr+</span>
+            <div class="lbl">Claims Settled</div>
+          </div>
+          <div class="stat-box">
+            <span class="num">98%</span>
+            <div class="lbl">Claim Success Rate</div>
+          </div>
+          <div class="stat-box">
+            <span class="num">15+</span>
+            <div class="lbl">Years of Trust</div>
+          </div>
+          <div class="irda-badge">
+            <div class="badge-icon">🏅</div>
+            <div>
+              <div class="badge-text">IRDA Registered Insurance Broker</div>
+              <div class="badge-sub">Reg. No. xxxxxx · Valid till 2026 · Govt. of India Approved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FORM -->
+<section id="quote">
+  <div class="container">
+    <div class="quote-wrap">
+      <div class="reveal">
+        <div class="section-tag">Free Quote</div>
+        <h2>Get Your Personalized Insurance Quote</h2>
+        <p>Fill in your details and our expert will get back to you within 30 minutes with the best options tailored for you.</p>
+        <div class="quote-benefits">
+          <div class="qb-item"><div class="qb-check">✓</div><p>Compare 20+ top insurance companies</p></div>
+          <div class="qb-item"><div class="qb-check">✓</div><p>Lowest premiums guaranteed</p></div>
+          <div class="qb-item"><div class="qb-check">✓</div><p>No spam — only expert advice</p></div>
+          <div class="qb-item"><div class="qb-check">✓</div><p>Instant WhatsApp & email confirmation</p></div>
+        </div>
+      </div>
+      <div class="quote-form-card reveal">
+        <h3 class="form-title">Get Free Quote 🎯</h3>
+        <p class="form-sub">Takes less than 60 seconds · 100% Free</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Rahul">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Sharma">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="rahul@email.com">
+        </div>
+        <div class="form-group">
+          <label>Insurance Type</label>
+          <select>
+            <option value="">Select Insurance Type</option>
+            <option>Life Insurance</option>
+            <option>Health Insurance</option>
+            <option>Motor Insurance</option>
+            <option>Business Insurance</option>
+            <option>Travel Insurance</option>
+            <option>Home Insurance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" placeholder="Mumbai">
+        </div>
+        <button class="btn-submit" onclick="handleSubmit(this)">Get My Free Quote →</button>
+        <p class="form-note">🔒 Your data is safe & will never be shared with third parties.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="section-tag">Client Stories</div>
+      <h2>What Our Clients Say About Us</h2>
+      <p>Real experiences from real families who trusted SecureLife to protect what matters most.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"SecureLife's team helped me choose the perfect term insurance plan for my family. The entire process was smooth, transparent, and the premium was 15% lower than what I found online. Highly recommended!"</p>
+        <div class="testi-author">
+          <div class="author-avatar av-blue">RS</div>
+          <div><div class="author-name">Rajesh Sharma</div><div class="author-role">Software Engineer, Bengaluru</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"When my father was hospitalized, SecureLife's claim team guided us through every step. The ₹4.5 lakh claim was settled in just 36 hours. Their 24/7 support is truly exceptional."</p>
+        <div class="testi-author">
+          <div class="author-avatar av-green">PM</div>
+          <div><div class="author-name">Priya Menon</div><div class="author-role">Teacher, Chennai</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"Got my car insurance renewed in literally 10 minutes via WhatsApp. Zero paperwork, instant policy document on email. This is what modern insurance should feel like!"</p>
+        <div class="testi-author">
+          <div class="author-avatar av-orange">AK</div>
+          <div><div class="author-name">Arjun Kapoor</div><div class="author-role">Business Owner, Delhi</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"As a small business owner, I was worried about finding the right commercial insurance. The advisor explained everything patiently and helped me get comprehensive coverage within my budget."</p>
+        <div class="testi-author">
+          <div class="author-avatar av-purple">SR</div>
+          <div><div class="author-name">Sunita Reddy</div><div class="author-role">Restaurant Owner, Hyderabad</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"The family health insurance plan they recommended covers all four of us at an unbeatable price. Cashless treatment at the hospital near our home. Absolutely worth every rupee."</p>
+        <div class="testi-author">
+          <div class="author-avatar av-teal">VN</div>
+          <div><div class="author-name">Vikram Nair</div><div class="author-role">CA, Pune</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">"I was skeptical at first, but after the claim experience, I'm a believer. No unnecessary questions, just quick processing and a fair settlement. SecureLife has earned a customer for life."</p>
+        <div class="testi-author">
+          <div class="author-avatar av-navy">DG</div>
+          <div><div class="author-name">Deepa Gupta</div><div class="author-role">Doctor, Mumbai</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND 2 -->
+<div class="cta-band">
+  <div class="container">
+    <h2>Ready to protect what matters most?</h2>
+    <p>Join 50,000+ families who trust SecureLife. Get your free quote in 60 seconds.</p>
+    <div class="cta-band-btns">
+      <a href="#quote" class="btn-dark">Start Now — It's Free ✦</a>
+      <a href="https://wa.me/919876543210" class="btn-white">💬 WhatsApp Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="container">
+    <div class="partners-label">Trusted Partner Companies</div>
+    <div class="partners-track-wrap">
+      <div class="partners-track">
+        <div class="partner-logo">🔵 LIC of India</div>
+        <div class="partner-logo">🟠 HDFC Life</div>
+        <div class="partner-logo">🔴 ICICI Prudential</div>
+        <div class="partner-logo">🟢 SBI Life</div>
+        <div class="partner-logo">🔵 Star Health</div>
+        <div class="partner-logo">🟡 Bajaj Allianz</div>
+        <div class="partner-logo">🟣 Max Life</div>
+        <div class="partner-logo">🔴 Niva Bupa</div>
+        <div class="partner-logo">🟠 Tata AIA</div>
+        <div class="partner-logo">🔵 HDFC Ergo</div>
+        <div class="partner-logo">🟢 New India Assurance</div>
+        <div class="partner-logo">🔵 LIC of India</div>
+        <div class="partner-logo">🟠 HDFC Life</div>
+        <div class="partner-logo">🔴 ICICI Prudential</div>
+        <div class="partner-logo">🟢 SBI Life</div>
+        <div class="partner-logo">🔵 Star Health</div>
+        <div class="partner-logo">🟡 Bajaj Allianz</div>
+        <div class="partner-logo">🟣 Max Life</div>
+        <div class="partner-logo">🔴 Niva Bupa</div>
+        <div class="partner-logo">🟠 Tata AIA</div>
+        <div class="partner-logo">🔵 HDFC Ergo</div>
+        <div class="partner-logo">🟢 New India Assurance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-bg-card"></div>
+        <div class="about-img-card">
+          <div class="about-emoji">🏛️<br><span style="font-size:0.8rem;color:var(--text-light);display:block;margin-top:8px;font-family:'DM Sans'">15+ Years of Excellence</span></div>
+        </div>
+        <div class="about-milestone">
+          <div class="m-num">2009</div>
+          <div class="m-lbl">Founded</div>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <div class="section-tag">Our Story</div>
+        <h2>Built on Trust, Driven by Purpose</h2>
+        <p>SecureLife was founded in 2009 with a simple mission: to make quality insurance accessible, understandable, and affordable for every Indian family and business.</p>
+        <p style="margin-top:14px">Over 15 years, we've grown from a small advisory firm in Mumbai to a pan-India insurance brokerage trusted by over 50,000 clients. Our team of 200+ IRDA-certified advisors works tirelessly to ensure every client gets the right coverage at the right price.</p>
+        <div class="mission-box">
+          <p>"We believe every family deserves financial security. Our job is to make that happen — simply, transparently, and affordably."</p>
+          <p style="margin-top:10px;font-size:0.82rem;font-style:normal;color:var(--text-light)">— Founder, SecureLife Insurance</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="section-tag">FAQ</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know about insurance, answered simply.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">What is the difference between term insurance and life insurance? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Term insurance provides pure life cover for a specific period (10–40 years). If the policyholder passes away during this term, the nominee receives the sum assured. Traditional life insurance (endowment/whole life) combines insurance with savings. Term plans offer higher cover at lower premiums, making them ideal for income protection.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How does cashless hospitalization work? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Under cashless hospitalization, you can get treated at any of our 10,000+ network hospitals without paying upfront. The insurer settles the bill directly with the hospital. You only need to show your health card and submit a pre-authorization request. Your out-of-pocket expense is zero for covered treatments.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">How do I file an insurance claim? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Filing a claim is simple: contact us via WhatsApp, phone, or email, and our dedicated claim support team will guide you through every step. For health claims, we provide a claim form and hospital documents checklist. Motor claims are initiated by calling the helpline within 24 hours of the incident. Most claims are processed within 24–72 hours.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I port my existing health insurance to a better plan? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes! IRDA allows health insurance portability. You can switch to a better insurer without losing your accumulated no-claim bonus or waiting period credits. The process must be initiated 45 days before your renewal date. Our advisors handle the entire portability process for free.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">What factors affect my insurance premium? <span class="faq-icon">+</span></div>
+        <div class="faq-a">For life/health insurance: age, sum assured, medical history, lifestyle habits, and coverage type. For motor insurance: vehicle age, make/model, IDV, location, and add-ons. Our advisors analyze all these factors to find the most cost-effective plan for your profile across 20+ insurance companies.</div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">Is my personal data safe with SecureLife? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Absolutely. We follow strict data privacy protocols under the IT Act and IRDA guidelines. Your information is used solely to find the best insurance plans for you and is never sold or shared with unauthorized parties. All our digital systems use 256-bit SSL encryption.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Get In Touch</div>
+      <h2>We're Here for You, Always.</h2>
+      <p>Reach us through any channel — our team typically responds within 30 minutes during business hours.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-cards">
+        <a href="https://wa.me/919876543210" class="contact-card reveal">
+          <div class="cc-icon cc-green">💬</div>
+          <div>
+            <h4>WhatsApp Us</h4>
+            <p>+91 98765 43210 · Available 9AM – 9PM</p>
+          </div>
+        </a>
+        <a href="tel:+919876543210" class="contact-card reveal">
+          <div class="cc-icon cc-blue">📞</div>
+          <div>
+            <h4>Call Us Directly</h4>
+            <p>+91 98765 43210 · Mon–Sat, 9AM–7PM</p>
+          </div>
+        </a>
+        <a href="mailto:hello@securelife.in" class="contact-card reveal">
+          <div class="cc-icon cc-gold">📧</div>
+          <div>
+            <h4>Email Us</h4>
+            <p>hello@securelife.in · Reply within 2 hours</p>
+          </div>
+        </a>
+        <a href="#" class="contact-card reveal">
+          <div class="cc-icon cc-gold">📍</div>
+          <div>
+            <h4>Visit Our Office</h4>
+            <p>123 Business Park, Andheri East, Mumbai – 400069</p>
+          </div>
+        </a>
+      </div>
+      <div class="map-card reveal">
+        <div class="map-placeholder">
+          <div class="map-emoji">🗺️</div>
+          <p>123 Business Park, Andheri East<br>Mumbai, Maharashtra – 400069</p>
+          <a href="https://maps.google.com" target="_blank" style="color:var(--gold-light);text-decoration:none;font-size:0.82rem;font-weight:600;margin-top:8px;display:inline-block">Open in Google Maps →</a>
+        </div>
+        <div class="map-address">📍 Near Metro Station · Parking Available · Mon–Sat 9AM–7PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon">🛡️</div>
+          <span class="logo-text">Secure<span>Life</span></span>
+        </div>
+        <p>India's trusted insurance advisor since 2009. IRDA registered broker helping 50,000+ families and businesses stay protected.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Life Insurance</a></li>
+          <li><a href="#services">Health Insurance</a></li>
+          <li><a href="#services">Motor Insurance</a></li>
+          <li><a href="#services">Business Insurance</a></li>
+          <li><a href="#services">Travel Insurance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Disclaimer</a></li>
+          <li><a href="#">IRDA Registration</a></li>
+          <li><a href="#">Grievance Redressal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 SecureLife Insurance Brokers Pvt. Ltd. All rights reserved.</span>
+      <span>IRDA Reg. No. xxxxxx | CIN: U66000MH2009PTC000000</span>
+      <span>Made with ❤️ in India</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/919876543210" class="whatsapp-btn" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+  // ─── MOBILE MENU ───
+  function toggleMenu() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  // ─── SCROLL REVEAL ───
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── FAQ TOGGLE ───
+  function toggleFaq(el) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  // ─── STICKY HEADER ───
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('mainHeader');
+    header.style.background = window.scrollY > 50
+      ? 'rgba(7,19,36,0.98)'
+      : 'rgba(11,31,58,0.96)';
+  });
+
+  // ─── FORM SUBMIT ───
+  function handleSubmit(btn) {
+    btn.textContent = '✅ Quote Sent! We\'ll call you shortly.';
+    btn.style.background = 'linear-gradient(135deg, #1A7A4A, #2EA668)';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Get My Free Quote →';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 4000);
+  }
+
+  // ─── SMOOTH STAGGERED HERO REVEAL ───
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hero-content > *').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.15}s`;
+    });
+  });
+</script>
+</body>
+</html>
